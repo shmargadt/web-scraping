@@ -30,12 +30,12 @@ const getWallaData = html => {
     })
   })
   console.log("כותרות ראשיות Walla", wallaData)
+  compareNewsText(ynetData, wallaURL);
 }
 
 const getWallaDataFromURL = () => {
   axios.get(wallaURL).then (response => {
     getWallaData(response.data);
-    compareNewsText(ynetData, wallaURL);
   }).catch(error => {
     console.log(error);
   })
@@ -43,7 +43,49 @@ const getWallaDataFromURL = () => {
 
 const compareNewsText = (firstTextArray, secondTextArray) => {
   // TODO
+  const firstTextTitlesArray = firstTextArray.map(arr =>arr.title);
+  const secondTextTitlesArray = firstTextArray.map(arr => arr.title);
+  const commonText = LCSubstr(firstTextArray, secondTextArray)
+  console.log(commonText)
 }
+
+function LCSubstr(firstTextArray, secondTextArray) {
+  let lcsArr = new Array(firstTextArray).fill(0).map(item =>(new Array(secondTextArray).fill(0))) 
+  let z = 0
+  let ret = ''
+  for (let i=0;i++;i<firstTextArray.length) {
+    for (let j=0;j++;j<secondTextArray.length) {
+      // 1 cond
+      if (firstTextArray[i] === secondTextArray[j]) {
+        // 1.a cond
+        if (i === 1 || j === 1) {
+          lcsArr[i,j] = 1
+        }
+        else {
+          lcsArr[i,j] = lcsArr[i-1,j-1] + 1
+        }
+
+        // 1.b cond
+        if (lcsArr[i,j] > z) {
+          z = lcsArr[i,j]
+          ret = firstTextArray.slice(i-z+1,i).join('')
+        }
+        else {
+          // 1.b.a cond
+          if (lcsArr[i,j] === z) {
+            ret = ret + firstTextArray.slice(i-z+1,i).join('')
+          }
+        }
+
+      }
+      else {
+        lcsArr[i,j] = 0
+      }
+    };
+  }
+  return ret;
+}
+
 
 axios.get(ynetURL).then (response => {
   getYnetData(response.data);
