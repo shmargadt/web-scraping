@@ -2,35 +2,34 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 const ynetURL = 'https://ynet.co.il/home/0,7340,L-8,00.html'
-let ynetData;
-let wallaData;
+let ynetData = [];
+let wallaData = [];
 
 
 const getYnetData = html => {
-  let ynetData = [];
   const $ = cheerio.load(html);
   $('.block .B6 .element.ghcite .cell .str3s_txt').each((i, elem) => {
     ynetData.push({
       title: $(elem).find('.title').text(),
-      sub_title: $(elem).find('.sub_title').text()
+      subTitle: $(elem).find('.sub_title').text()
     })
   })
-  console.log("כותרות ראשיות Ynet", ynetData)
 }
 
 const wallaURL = 'https://www.walla.co.il/'
 
 const getWallaData = html => {
-  let wallaData = [];
   const $ = cheerio.load(html);
   $('.editor-selections article.fc.common-article').each((i, elem) => {
     wallaData.push({
       title: $(elem).find('.text').text(),
-      sub_title: $(elem).find('p').text()
+      subTitle: $(elem).find('p').text()
     })
   })
   console.log("כותרות ראשיות Walla", wallaData)
-  compareNewsText(ynetData, wallaURL);
+  console.log("כותרות ראשיות Ynet", ynetData)
+
+  compareNewsText(ynetData, wallaData);
 }
 
 const getWallaDataFromURL = () => {
@@ -42,48 +41,60 @@ const getWallaDataFromURL = () => {
 }
 
 const compareNewsText = (firstTextArray, secondTextArray) => {
+  findLongestCommonSubstringBetweenText(firstTextArray, secondTextArray)
   // TODO
-  const firstTextTitlesArray = firstTextArray.map(arr =>arr.title);
-  const secondTextTitlesArray = firstTextArray.map(arr => arr.title);
-  const commonText = LCSubstr(firstTextArray, secondTextArray)
-  console.log(commonText)
+  // 1. find all common substrings
+  // 2. find a strong connection between the substrings
 }
 
-function LCSubstr(firstTextArray, secondTextArray) {
-  let lcsArr = new Array(firstTextArray).fill(0).map(item =>(new Array(secondTextArray).fill(0))) 
-  let z = 0
-  let ret = ''
-  for (let i=0;i++;i<firstTextArray.length) {
-    for (let j=0;j++;j<secondTextArray.length) {
-      // 1 cond
-      if (firstTextArray[i] === secondTextArray[j]) {
-        // 1.a cond
-        if (i === 1 || j === 1) {
-          lcsArr[i,j] = 1
-        }
-        else {
-          lcsArr[i,j] = lcsArr[i-1,j-1] + 1
-        }
+const findLongestCommonSubstringBetweenText =  function(firstTextArray, secondTextArray) {
+  const firstTextTitlesLongString = firstTextArray.map(arr =>arr.title).join(' ');
+  const secondTextTitlesLongString = secondTextArray.map(arr => arr.title).join(' ');
+  const commonTitleText = findLongestCommonSubstring(firstTextTitlesLongString, secondTextTitlesLongString);
+  console.log('טקסט משותף בין כותרות')
+  console.log('---------------------')
+  console.log(commonTitleText)
+  console.log('---------------------')
+  const firstTextSubTitlesLongString = firstTextArray.map(arr =>arr.subTitle).join(' ');
+  const secondTextSubTitlesLongString = secondTextArray.map(arr => arr.subTitle).join(' ');
+  const commonSubTitleText = findLongestCommonSubstring(firstTextSubTitlesLongString, secondTextSubTitlesLongString);
+  console.log('טקסט משותף בין תוכן')
+  console.log('---------------------')
+  console.log(commonSubTitleText)
+  console.log('---------------------')
+  const firstTextLongString = firstTextTitlesLongString + ' ' + firstTextSubTitlesLongString;
+  const secondTextLongString = secondTextTitlesLongString + ' ' + secondTextSubTitlesLongString;
+  const commonText = findLongestCommonSubstring(firstTextLongString, secondTextLongString);
+  console.log('טקסט משותף בין כל הטקסט')
+  console.log('---------------------')
+  console.log(commonText)
+  console.log('---------------------')
+}
 
-        // 1.b cond
-        if (lcsArr[i,j] > z) {
-          z = lcsArr[i,j]
-          ret = firstTextArray.slice(i-z+1,i).join('')
+const findLongestCommonSubstring = function(firstStr, secondStr) {
+  let longest = '';
+  let str;
+  let k = 1;
+  // loop through the first string
+  for (let i = 0; i < firstStr.length; ++i) {
+    // loop through the second string
+    for (let j = 0; j < secondStr.length; ++j) {
+      // if it's the same letter
+      if (firstStr[i] === secondStr[j]) {
+        str = firstStr[i];
+        k = 1;
+        // keep going until the letters no longer match, or we reach end
+        while (i+k < firstStr.length && j+k < secondStr.length // haven't reached end
+               && firstStr[i+k] === secondStr[j+k]) { // same letter
+          str += firstStr[i+k];
+          ++k;
         }
-        else {
-          // 1.b.a cond
-          if (lcsArr[i,j] === z) {
-            ret = ret + firstTextArray.slice(i-z+1,i).join('')
-          }
-        }
-
+        // if this substring is longer than the longest, save it as the longest
+        if (str.length > longest.length) { longest = str }
       }
-      else {
-        lcsArr[i,j] = 0
-      }
-    };
+    }
   }
-  return ret;
+  return longest;
 }
 
 
