@@ -1,5 +1,15 @@
+# web-scraping
+This repository contains 2 web-scraping projects: 
+1. web-scraping-using-python  
+2. web-scraping-using-node-js
+
+Both projects are taking data from different urls and trying to process the data they have.
+
+# web-scraping-using-python
+Python program using the [1]Practical Introduction to Web Scraping in Python.
+
 # web-scraping-using-node-js
-This code use Node.js and friends to perform a quick and effective web-scraping for single-page applications.
+This code use Node.js and additional packages to perform a quick and effective web-scraping for single-page applications.
 
 # Get started
 1. npm install
@@ -38,3 +48,4 @@ function LCSubstr(S[1..r], T[1..n])
 
 ## External links
 - [The Algorithm from wikipedia](https://en.wikipedia.org/wiki/Longest_common_substring_problem)
+- [1] [Practical Introduction to Web Scraping in Python](https://realpython.com/python-web-scraping-practical-introduction/)
