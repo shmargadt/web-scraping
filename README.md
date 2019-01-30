@@ -1,25 +1,30 @@
-# web-scraping
+# Web Scraping
 This repository contains 2 web-scraping projects: 
 1. web-scraping-using-python  
 2. web-scraping-using-node-js
 
 Both projects are taking data from different urls and trying to process the data they have.
 
-# web-scraping-using-python
+# Web scraping using python
+
 Python program using the [1]Practical Introduction to Web Scraping in Python.
 
-# web-scraping-using-node-js
+# Web scraping using node js
+
 This code use Node.js and additional packages to perform a quick and effective web-scraping for single-page applications.
 
-# Get started
-1. npm install
-2. `node index.js`
+- Get started (node.js project)
+
+    - npm install
+    - `node index.js`
 
 
-# Longest common substring problem
+----------------
+## Longest common substring problem
+----------------
 In computer science, the longest common substring problem is to find the longest string (or strings) that is a substring (or are substrings) of two or more strings.
 
-## Pseudocode
+##### Pseudocode
 The following pseudocode finds the set of longest common substrings between two strings with dynamic programming:
 
 ```javascript
