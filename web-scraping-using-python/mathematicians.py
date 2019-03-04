@@ -1,24 +1,26 @@
 from bs4 import BeautifulSoup
 from networkHelper import simple_get
 
-def get_names():
+def get_ynet_data():
     """
     Downloads the page where the list of mathematicians is found
     and returns a list of strings, one per mathematician
     """
-    url = 'http://www.fabpedigree.com/james/mathmen.htm'
-    response = simple_get(url)
+    ynet_url = 'https://ynet.co.il/home/0,7340,L-8,00.html'
+    response = simple_get(ynet_url)
 
     if response is not None:
-        html = BeautifulSoup(response, 'html.parser')
-        names = set()
-        for li in html.select('li'):
-            for name in li.text.split('\n'):
-                if len(name) > 0:
-                    names.add(name.strip())
-        return list(names)
+        soup = BeautifulSoup(response, 'html.parser')
+        titles = []
+        titles_squares = soup.find_all("div", class_="str3s_txt")
+        for ts in titles_squares:
+            titles.append({
+                'title': ts.find("div", class_="title").text,
+                'sub_title': ts.find("div", class_="sub_title").text
+            })
+        return titles
 
     # Raise an exception if we failed to get any data from the url
-    raise Exception('Error retrieving contents at {}'.format(url))
+    raise Exception('Error retrieving contents at {}'.format(ynet_url))
 
-print(get_names())
+print(get_ynet_data())
