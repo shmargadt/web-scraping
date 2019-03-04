@@ -3,8 +3,8 @@ from networkHelper import simple_get
 
 def get_ynet_data():
     """
-    Downloads the page where the list of mathematicians is found
-    and returns a list of strings, one per mathematician
+    Downloads the main page of ynet
+    and returns a list of dictionaires with the main topics
     """
     ynet_url = 'https://ynet.co.il/home/0,7340,L-8,00.html'
     response = simple_get(ynet_url)
