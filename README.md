@@ -3,12 +3,12 @@ This repository contains 2 web-scraping projects:
 1. web-scraping-using-python  
 2. web-scraping-using-node-js
 
-Both projects are taking data from different urls and trying to process the data they have.
+Both projects are taking data from different news websites in Israel and trying to process the data they have.
 
 # Web scraping using python
 
-Python program using the [1]Practical Introduction to Web Scraping in Python.
-
+Python program to new data, 
+using the the guide lines in Practical Introduction to Web Scraping in Python  [[1]](https://github.com/shmargadt/web-scraping.git#user-content-external-links).
 # Web scraping using node js
 
 This code use Node.js and additional packages to perform a quick and effective web-scraping for single-page applications.
