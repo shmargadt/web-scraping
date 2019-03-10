@@ -9,6 +9,10 @@ Both projects are taking data from different news websites in Israel and trying 
 
 Python program to new data, 
 using the the guide lines in Practical Introduction to Web Scraping in Python  [[1]](https://github.com/shmargadt/web-scraping.git#user-content-external-links).
+
+- Get started (python project)
+
+    - python web_scraping.py
 # Web scraping using node js
 
 This code use Node.js and additional packages to perform a quick and effective web-scraping for single-page applications.
